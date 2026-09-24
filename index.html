@@ -1,1 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comeback — Come back better than you left</title>
+<meta name="description" content="Comeback is a recovery app for injured athletes: an AI coach that drafts your daily rehab, technical, and gym work, plus a community of real comeback stories.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#15120F;
+    --black-soft:#1F1B16;
+    --white:#FFFFFF;
+    --cream:#F5F1E6;
+    --paper:#F4F3EF;
+    --clay:#C1592F;
+    --clay-dark:#9C4423;
+    --forest:#23392F;
+    --forest-light:#EDF1EC;
+    --line: rgba(21,18,15,0.12);
+    --line-onblack: rgba(245,241,230,0.18);
+    color-scheme: light;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:80px;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--black);
+    font-family:'Archivo', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 40px;}
 
+  .disp{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.92;
+    margin:0;
+  }
+
+  /* ---------------- NAV ---------------- */
+  header.nav{
+    position:sticky; top:0; z-index:60;
+    top:env(safe-area-inset-top,0px);
+    background:var(--black);
+    border-bottom:1px solid var(--line-onblack);
+  }
+  .nav-inner{
+    max-width:1200px; margin:0 auto; padding:20px 40px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .wordmark{
+    font-family:'Anton', sans-serif; font-size:24px; letter-spacing:0.02em;
+    color:var(--white); text-decoration:none; text-transform:uppercase;
+    display:flex; align-items:center; gap:2px;
+  }
+  .wordmark span{color:var(--clay);}
+  nav.links{display:flex; gap:34px; font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;}
+  nav.links a{text-decoration:none; color:#C7C2B7; transition:color .15s ease;}
+  nav.links a:hover{color:var(--white);}
+  .nav-cta{
+    font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
+    padding:13px 24px; background:var(--clay); color:var(--white); border-radius:2px;
+    text-decoration:none; white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--clay-dark);}
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    background:var(--black); color:var(--white);
+    padding:64px 0 120px;
+    position:relative;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center;}
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em;
+    color:var(--clay); margin-bottom:26px;
+  }
+  .hero-eyebrow::before{content:''; width:26px; height:2px; background:var(--clay);}
+  h1.headline{
+    font-size:clamp(52px,7vw,92px);
+    color:var(--white);
+  }
+  h1.headline .hit{color:var(--clay);}
+  .hero-sub{
+    font-size:19px; line-height:1.6; color:#C7C2B7; max-width:44ch; margin:28px 0 38px;
+  }
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-weight:800; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;
+    padding:18px 30px; border-radius:2px; text-decoration:none; border:2px solid transparent; cursor:pointer;
+  }
+  .btn-clay{background:var(--clay); color:var(--white);}
+  .btn-clay:hover{background:var(--clay-dark);}
+  .btn-outline-light{border-color:rgba(245,241,230,0.4); color:var(--white);}
+  .btn-outline-light:hover{border-color:var(--white);}
+  .hero-note{margin-top:20px; font-size:13px; color:#8B8578; font-style:italic;}
+
+  .phone-stage{display:flex; justify-content:center; position:relative;}
+  .phone{
+    width:280px; border-radius:28px; overflow:hidden;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.6);
+    transform:rotate(4deg);
+    border:6px solid var(--black-soft);
+    background:var(--black-soft);
+  }
+  .phone img{display:block; width:100%;}
+  .phone-tag{
+    position:absolute; top:10px; left:40%; transform:translateX(-190px) rotate(-8deg);
+    background:var(--white); color:var(--black); font-family:'Anton',sans-serif;
+    font-size:14px; letter-spacing:0.04em; padding:8px 14px; border-radius:2px;
+    text-transform:uppercase;
+  }
+
+  /* ---------------- SCOREBOARD MARQUEE ---------------- */
+  .scoreboard{
+    background:var(--clay); color:var(--white);
+    padding:26px 0; overflow:hidden; white-space:nowrap; margin-top:-64px; position:relative; z-index:5;
+  }
+  .scoreboard-track{display:inline-flex; animation:scroll 34s linear infinite;}
+  .scoreboard-track .item{
+    display:inline-flex; align-items:baseline; gap:14px; padding:0 42px;
+  }
+  .scoreboard-track .num{font-family:'Anton',sans-serif; font-size:34px; letter-spacing:0.01em;}
+  .scoreboard-track .lbl{font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; opacity:0.88;}
+  .scoreboard-track .sep{opacity:0.5; font-size:22px; padding:0 6px;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){ .scoreboard-track{animation:none;} }
+
+  /* ---------------- FEATURE BLOCKS ---------------- */
+  .feature-block{padding:130px 0;}
+  .feature-block.on-black{background:var(--black); color:var(--white);}
+  .feature-block.on-white{background:var(--white); color:var(--black);}
+
+  .feat-grid{display:grid; grid-template-columns:1fr 1fr; gap:76px; align-items:center;}
+  .feat-grid.reverse .f-text{order:2;}
+  .feat-grid.reverse .f-image{order:1;}
+
+  .f-kicker{font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--clay); margin-bottom:18px;}
+  .f-title{font-size:clamp(32px,4vw,46px); margin-bottom:22px;}
+  .on-black .f-body{color:#C7C2B7;}
+  .on-white .f-body{color:#4A453D;}
+  .f-body{font-size:17px; line-height:1.7; max-width:42ch;}
+  .f-list{list-style:none; padding:0; margin:26px 0 0;}
+  .f-list li{
+    font-size:15px; padding:12px 0; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; gap:16px;
+  }
+  .on-black .f-list li{border-top-color:var(--line-onblack); color:#C7C2B7;}
+  .f-list li span.tag{font-weight:800; color:var(--clay); font-size:12px; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap;}
+
+  .f-image{display:flex; justify-content:center;}
+  .f-image .phone{width:260px; transform:rotate(-3deg); box-shadow:0 30px 60px -18px rgba(0,0,0,0.45);}
+  .on-black .f-image .phone{box-shadow:0 30px 70px -14px rgba(0,0,0,0.7);}
+
+  /* ---------------- HOW IT WORKS ---------------- */
+  .how{background:var(--paper); padding:130px 0;}
+  .how-head{max-width:640px; margin-bottom:80px;}
+  .how-head .f-kicker{margin-bottom:16px;}
+  .how-head h2{font-size:clamp(34px,4.5vw,54px);}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border:1px solid var(--line);}
+  .step{background:var(--white); padding:44px 34px;}
+  .step-index{font-family:'Anton',sans-serif; font-size:56px; color:var(--clay); line-height:1; margin-bottom:22px;}
+  .step h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:22px; margin:0 0 14px; letter-spacing:0.01em;}
+  .step p{font-size:15px; line-height:1.65; color:#4A453D; margin:0;}
+
+  /* ---------------- PRICING ---------------- */
+  .pricing{background:var(--white); padding:130px 0;}
+  .price-head{max-width:640px; margin-bottom:70px;}
+  .price-head h2{font-size:clamp(34px,4.5vw,54px);}
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
+  .price-card{
+    border:1px solid var(--line); border-radius:2px; padding:38px 30px;
+    display:flex; flex-direction:column;
+  }
+  .price-card.featured{background:var(--black); color:var(--white); border-color:var(--black); position:relative;}
+  .price-badge{
+    position:absolute; top:-14px; left:30px;
+    background:var(--clay); color:var(--white); font-size:11px; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.06em; padding:6px 12px; border-radius:2px;
+  }
+  .price-name{font-family:'Anton',sans-serif; font-size:22px; text-transform:uppercase; letter-spacing:0.01em;}
+  .price-amount{font-family:'Anton',sans-serif; font-size:52px; margin:18px 0 2px; letter-spacing:0.01em;}
+  .price-amount .per{font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; text-transform:none; letter-spacing:0; opacity:0.6;}
+  .price-note{font-size:13px; color:#8B8578; margin-bottom:28px; min-height:18px;}
+  .featured .price-note{color:#B0AB9F;}
+  .price-feats{list-style:none; padding:20px 0 0; margin:0 0 30px; border-top:1px solid var(--line); flex:1;}
+  .featured .price-feats{border-top-color:var(--line-onblack);}
+  .price-feats li{padding:11px 0; font-size:14.5px; display:flex; gap:10px; align-items:flex-start;}
+  .price-feats li::before{content:'—'; color:var(--clay); font-weight:800; flex-shrink:0;}
+  .price-cta{
+    text-align:center; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
+    padding:16px; border-radius:2px; text-decoration:none; border:2px solid var(--black);
+  }
+  .price-cta:hover{background:var(--black); color:var(--white);}
+  .featured .price-cta{border-color:var(--clay); background:var(--clay); color:var(--white);}
+  .featured .price-cta:hover{background:var(--clay-dark); border-color:var(--clay-dark);}
+
+  /* ---------------- FINAL CTA ---------------- */
+  .cta-band{
+    background:var(--black); color:var(--white); text-align:center;
+    padding:130px 0 140px; position:relative;
+    clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+    margin-top:-1px;
+  }
+  .cta-band h2{font-size:clamp(40px,6vw,68px); max-width:18ch; margin:0 auto 24px;}
+  .cta-band p{font-size:18px; color:#C7C2B7; max-width:46ch; margin:0 auto 38px;}
+
+  /* ---------------- FOOTER ---------------- */
+  footer{background:var(--black-soft); color:#B0AB9F; padding:70px 0 34px; border-top:1px solid var(--line-onblack);}
+  .foot-top{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; padding-bottom:44px; border-bottom:1px solid var(--line-onblack); margin-bottom:28px;}
+  .foot-brand .wordmark{margin-bottom:16px;}
+  .foot-brand p{max-width:34ch; font-size:14.5px; line-height:1.65; color:#8B8578;}
+  .foot-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .foot-col h4{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#6E6A5F; font-weight:800; margin:0 0 16px;}
+  .foot-col a{display:block; font-size:14.5px; color:#D6D2C6; text-decoration:none; margin-bottom:12px;}
+  .foot-col a:hover{color:var(--clay);}
+  .foot-bottom{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:#6E6A5F;}
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width:920px){
+    nav.links{display:none;}
+    .wrap{padding:0 24px;}
+    .nav-inner{padding:16px 24px;}
+    .hero{padding:48px 0 90px; clip-path:polygon(0 0,100% 0,100% 95%,0 100%);}
+    .hero-grid{grid-template-columns:1fr; gap:52px;}
+    .phone-stage{order:-1;}
+    .phone{width:230px; transform:rotate(0deg); margin:0 auto;}
+    .phone-tag{display:none;}
+    .scoreboard{margin-top:-40px;}
+    .feature-block{padding:90px 0;}
+    .feat-grid{grid-template-columns:1fr; gap:40px;}
+    .feat-grid.reverse .f-text{order:1;} .feat-grid.reverse .f-image{order:2;}
+    .f-image .phone{width:220px; transform:rotate(0);}
+    .how{padding:90px 0;}
+    .steps{grid-template-columns:1fr;}
+    .pricing{padding:90px 0;}
+    .price-grid{grid-template-columns:1fr;}
+    .cta-band{padding:90px 0 100px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="wordmark">COME<span>BACK</span></a>
+    <nav class="links">
+      <a href="#how">How it works</a>
+      <a href="#stories">Stories</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a href="#notify" class="nav-cta">Get notified</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-eyebrow">Built for injured athletes</div>
+        <h1 class="disp headline">Come back<br>better than<br>you <span class="hit">left.</span></h1>
+        <p class="hero-sub">No more guessing what today's session should be. Comeback turns your PT plan and your recovery phase into daily rehab, technical, and gym work — built for you, adjusted as you heal.</p>
+        <div class="hero-ctas">
+          <a href="#notify" class="btn btn-clay">Get notified at launch</a>
+          <a href="#how" class="btn btn-outline-light">See how it works</a>
+        </div>
+        <div class="hero-note">Coming soon to the App Store as Comeback: Injury Recovery.</div>
+      </div>
+      <div class="phone-stage">
+        <div class="phone-tag">No days off</div>
+        <div class="phone">
+          <img src = "images/welcome_screen_edited.jpg" alt="Comeback app welcome screen">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOREBOARD -->
+  <div class="scoreboard" id="stories">
+    <div class="scoreboard-track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- FEATURE 1 -->
+  <section class="feature-block on-white">
+    <div class="wrap feat-grid">
+      <div class="f-text">
+        <div class="f-kicker">AI Coach</div>
+        <h2 class="disp f-title">A plan built<br>from where you<br>actually are</h2>
+        <p class="f-body">Tell Comeback your injury, your phase, and what your PT cleared you for. The AI coach drafts today's session or the full week — nothing changes on your plan until you approve it.</p>
+        <ul class="f-list">
+          <li>Reads your recovery phase and recent check-ins <span class="tag">Adaptive</span></li>
+          <li>Blends rehab, technical, and gym work in one session <span class="tag">All-in-one</span></li>
+          <li>Flags when something needs a PT check first <span class="tag">Safety</span></li>
+        </ul>
+      </div>
+      <div class="f-image">
+        <div class="phone">
+          <img src = "images/ai_day_edited.jpg" alt="Comeback app AI coach screen">
+        </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 2 -->
+  <section class="feature-block on-black">
+    <div class="wrap feat-grid reverse">
+      <div class="f-text">
+        <div class="f-kicker">Daily Goals</div>
+        <h2 class="disp f-title">Broken into<br>the days you'll<br>actually run</h2>
+        <p class="f-body">A full week of rehab sets, film study, agility, and strength work, laid out day by day with reps, sets, and the reasoning behind each one — so you know exactly what today demands.</p>
+        <ul class="f-list">
+          <li>Day-by-day goals you check off as you go <span class="tag">Structured</span></li>
+          <li>Built-in cautions specific to your injury <span class="tag">Protected</span></li>
+          <li>Progresses automatically with your check-ins <span class="tag">Adaptive</span></li>
+        </ul>
+      </div>
+      <div class="f-image">
+        <div class="phone">
+          <img src = "images/ai_weekly_plan.png" alt="Comeback app showing a weekly plan drafted by the AI coach" />
+        </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 3 -->
+  <section class="feature-block on-white">
+    <div class="wrap feat-grid">
+      <div class="f-text">
+        <div class="f-kicker">Comeback Stories</div>
+        <h2 class="disp f-title">You're not the<br>first one back<br>from this</h2>
+        <p class="f-body">Read how other athletes — from your exact injury, and the pros who've been through it — made it back. Then, once you're through it, share your own story for the next person starting where you are now.</p>
+        <ul class="f-list">
+          <li>Filter stories by injury, so the parallels are real <span class="tag">Relevant</span></li>
+          <li>Featured comebacks from pro and college athletes <span class="tag">Proven</span></li>
+          <li>Share milestones straight from your tracker <span class="tag">Community</span></li>
+        </ul>
+      </div>
+      <div class="f-image">
+        <div class="phone">
+          <img src = "images/stories_edited.jpg"/>
+        </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="how-head">
+        <div class="f-kicker">Getting Started</div>
+        <h2 class="disp">Three steps to your first plan</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-index disp">01</div>
+          <h3>Set up your comeback</h3>
+          <p>Enter your injury, the date it happened, and what your PT has cleared you for so far.</p>
+        </div>
+        <div class="step">
+          <div class="step-index disp">02</div>
+          <h3>Get today's plan</h3>
+          <p>The AI coach drafts a session from your phase and recent check-ins. Review it, then approve.</p>
+        </div>
+        <div class="step">
+          <div class="step-index disp">03</div>
+          <h3>Log, heal, repeat</h3>
+          <p>Check in on how it felt. Comeback adjusts tomorrow's plan and moves you into the next phase when you're ready.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="price-head">
+        <div class="f-kicker">Pricing</div>
+        <h2 class="disp">Free to start your comeback</h2>
+      </div>
+      <div class="price-grid">
+
+        <div class="price-card">
+          <div class="price-name">Free</div>
+          <div class="price-amount disp">$0</div>
+          <div class="price-note">Enough to get your comeback started.</div>
+          <ul class="price-feats">
+            <li>3 AI-drafted plans per month</li>
+            <li>Daily goal tracking</li>
+            <li>Full comeback stories feed</li>
+            <li>Share your own milestones</li>
+          </ul>
+          <a href="#notify" class="price-cta">Get notified</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">Pro Monthly</div>
+          <div class="price-amount disp">$7.99<span class="per">/mo</span></div>
+          <div class="price-note">Billed monthly, cancel anytime.</div>
+          <ul class="price-feats">
+            <li>Unlimited AI-drafted plans</li>
+            <li>Full week drafts, not just today</li>
+            <li>Priority plan regeneration</li>
+            <li>Everything in Free</li>
+          </ul>
+          <a href="#notify" class="price-cta">Get notified</a>
+        </div>
+
+        <div class="price-card featured">
+          <div class="price-badge">Save 48%</div>
+          <div class="price-name">Pro Annual</div>
+          <div class="price-amount disp">$49.99<span class="per">/yr</span></div>
+          <div class="price-note">Works out to $4.17/mo — the full comeback covered.</div>
+          <ul class="price-feats">
+            <li>Unlimited AI-drafted plans</li>
+            <li>Full week drafts, not just today</li>
+            <li>Priority plan regeneration</li>
+            <li>Everything in Free</li>
+          </ul>
+          <a href="#notify" class="price-cta">Get notified</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band" id="notify">
+    <div class="wrap">
+      <h2 class="disp">Your comeback starts before the app does.</h2>
+      <p>Comeback is finishing up on the App Store. Reach out and we'll let you know the moment it's live.</p>
+      <a href="mailto:comeback@comeback-app.net?subject=Notify%20me%20when%20Comeback%20launches" class="btn btn-clay">comeback@comeback-app.net</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="wordmark">COME<span>BACK</span></a>
+        <p>Come back better than you left. A recovery companion for injured athletes, built with the PT room and the practice field both in mind.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="#how">How it works</a>
+          <a href="#stories">Stories</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="support_&_privacy.html" target="_blank" rel="noopener">Support & Privacy policy</a>
+            
+          <a href="mailto:comeback@comeback-app.net">comeback@comeback-app.net</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Comeback. All rights reserved.</span>
+      <span>Comeback: Injury Recovery</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var stats = [
+    {n:"2,097 YDS", l:"Adrian Peterson — 9 months after ACL & MCL surgery"},
+    {n:"941 DAYS", l:"Klay Thompson — between NBA games, then a championship"},
+    {n:"50 PTS", l:"Joel Embiid — in the playoffs, months after meniscus surgery"},
+    {n:"COMEBACK", l:"Shaun Livingston — back on the floor after doctors discussed amputation"},
+    {n:"YOUR STORY", l:"Could be next"}
+  ];
+  var track = document.getElementById('marqueeTrack');
+  var html = '';
+  for (var r = 0; r < 2; r++) {
+    stats.forEach(function(s){
+      html += '<span class="item"><span class="num disp">'+s.n+'</span><span class="lbl">'+s.l+'</span></span><span class="sep">/</span>';
+    });
+  }
+  track.innerHTML = html;
+</script>
+
+</body>
+</html>
