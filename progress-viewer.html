@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comeback — Progress</title>
+<style>
+  :root {
+    --bg: #F7F6F2; --card: #FFFFFF; --ink: #17211D; --inkSoft: #5C6660;
+    --inkFaint: #98A19B; --pitch: #0E5E43; --pitchSoft: #E3EFE8;
+    --ember: #D9541E; --line: #E5E3DC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15181B; --card: #1F2327; --ink: #F0F1ED; --inkSoft: #A8B0AA;
+      --inkFaint: #6B726C; --pitch: #3A9970; --pitchSoft: #16332A;
+      --ember: #E8703D; --line: #2C3034;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .wrap { width: 100%; max-width: 420px; }
+  .kicker {
+    color: var(--ember); font-size: 13px; font-weight: 800;
+    letter-spacing: 2px; text-align: center; margin-bottom: 8px;
+  }
+  h1 { font-size: 22px; text-align: center; margin: 0 0 28px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px;
+  }
+  label { display: block; font-size: 13px; color: var(--inkSoft); font-weight: 600; margin-bottom: 8px; }
+  input {
+    width: 100%; font-size: 24px; letter-spacing: 8px; text-align: center;
+    padding: 14px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--ink); font-family: inherit;
+  }
+  button {
+    width: 100%; margin-top: 16px; padding: 14px; border-radius: 10px;
+    border: none; background: var(--pitch); color: #fff; font-size: 15px;
+    font-weight: 700; font-family: inherit; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; }
+  .err { color: var(--ember); font-size: 13px; margin-top: 10px; text-align: center; }
+  .hidden { display: none; }
+  .name { font-size: 20px; font-weight: 800; margin: 0 0 2px; }
+  .sub { color: var(--inkSoft); font-size: 14px; margin: 0 0 20px; }
+  .stats { display: flex; gap: 10px; margin-bottom: 20px; }
+  .stat {
+    flex: 1; background: var(--bg); border-radius: 10px; padding: 12px; text-align: center;
+  }
+  .stat .num { font-size: 22px; font-weight: 800; }
+  .stat .label { font-size: 11px; color: var(--inkSoft); margin-top: 2px; }
+  .section-title {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--pitch); margin: 20px 0 10px;
+  }
+  .milestone {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+  }
+  .milestone:last-child { border-bottom: none; }
+  .m-title { font-size: 14px; text-transform: capitalize; }
+  .m-date { font-size: 12px; color: var(--inkFaint); }
+  .conf { font-size: 12px; font-weight: 700; color: var(--pitch); }
+  .footer-note {
+    text-align: center; font-size: 11.5px; color: var(--inkFaint); margin-top: 20px; line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">COMEBACK</div>
+  <h1>Injury recovery progress</h1>
+
+  <div class="card" id="pinCard">
+    <label for="pin">Enter the 4-digit PIN</label>
+    <input id="pin" type="tel" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" />
+    <button id="submitBtn" onclick="submitPin()">View progress</button>
+    <div class="err hidden" id="errMsg"></div>
+  </div>
+
+  <div class="card hidden" id="dataCard">
+    <p class="name" id="dName"></p>
+    <p class="sub" id="dSub"></p>
+    <div class="stats">
+      <div class="stat"><div class="num" id="dDays">—</div><div class="label">days in</div></div>
+      <div class="stat"><div class="num" id="dStreak">—</div><div class="label">day streak</div></div>
+    </div>
+    <div class="section-title">Milestones</div>
+    <div id="milestoneList"></div>
+    <p class="footer-note">Notes and reflections stay private — this view only ever shows dates and confidence ratings, never written entries.</p>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://kwuxxiyilhnlwxpfdhse.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_tGpURzDuVlA0Stk-Ux9pHA_ve_AeCl4';
+
+  function getToken() {
+    return new URLSearchParams(window.location.search).get('token') || '';
+  }
+
+  async function submitPin() {
+    const pin = document.getElementById('pin').value.trim();
+    const errEl = document.getElementById('errMsg');
+    const btn = document.getElementById('submitBtn');
+    errEl.classList.add('hidden');
+
+    if (!/^\d{4}$/.test(pin)) {
+      errEl.textContent = 'Enter exactly 4 digits.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    const token = getToken();
+    if (!token) {
+      errEl.textContent = 'This link is missing its token — ask for a fresh link.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/view-shared-progress`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ token, pin }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      renderData(data);
+    } catch (e) {
+      errEl.textContent = e.message || 'Something went wrong.';
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'View progress';
+    }
+  }
+
+  function renderData(d) {
+    document.getElementById('pinCard').classList.add('hidden');
+    const card = document.getElementById('dataCard');
+    card.classList.remove('hidden');
+
+    document.getElementById('dName').textContent = d.displayName ? `${d.displayName}'s comeback` : 'Comeback progress';
+    const subParts = [d.sport, d.injuryName].filter(Boolean);
+    document.getElementById('dSub').textContent = subParts.join(' · ') || '—';
+    document.getElementById('dDays').textContent = d.daysIn != null ? d.daysIn : '—';
+    document.getElementById('dStreak').textContent = d.streak != null ? d.streak : '—';
+
+    const list = document.getElementById('milestoneList');
+    list.innerHTML = '';
+    const unlocked = (d.milestones || []).filter((m) => m.date).sort((a, b) => (a.date < b.date ? -1 : 1));
+    if (!unlocked.length) {
+      list.innerHTML = '<p style="color: var(--inkFaint); font-size: 13px;">No milestones unlocked yet.</p>';
+      return;
+    }
+    unlocked.forEach((m) => {
+      const row = document.createElement('div');
+      row.className = 'milestone';
+      const dateStr = new Date(m.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      row.innerHTML = `
+        <div>
+          <div class="m-title">${m.id.replace(/([A-Z])/g, ' $1')}</div>
+          <div class="m-date">${dateStr}</div>
+        </div>
+        ${m.confidence != null ? `<div class="conf">${m.confidence}/10</div>` : ''}
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById('pin').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitPin();
+  });
+</script>
+</body>
+</html>
