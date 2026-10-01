@@ -106,6 +106,17 @@
     return new URLSearchParams(window.location.search).get('token') || '';
   }
 
+  // Milestone data (id, confidence) ultimately comes from the app's
+  // own locally-written data blob, with nothing server-side
+  // constraining what it can contain — never trust it enough to
+  // interpolate it into innerHTML unescaped, even though in normal
+  // use it's always a plain milestone name and a 0-10 number.
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+
   async function submitPin() {
     const pin = document.getElementById('pin').value.trim();
     const errEl = document.getElementById('errMsg');
@@ -172,10 +183,10 @@
       const dateStr = new Date(m.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
       row.innerHTML = `
         <div>
-          <div class="m-title">${m.id.replace(/([A-Z])/g, ' $1')}</div>
+          <div class="m-title">${escapeHtml(m.id.replace(/([A-Z])/g, ' $1'))}</div>
           <div class="m-date">${dateStr}</div>
         </div>
-        ${m.confidence != null ? `<div class="conf">${m.confidence}/10</div>` : ''}
+        ${m.confidence != null ? `<div class="conf">${escapeHtml(m.confidence)}/10</div>` : ''}
       `;
       list.appendChild(row);
     });
