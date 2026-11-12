@@ -3,57 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comeback — Reset Password</title>
+<title>Reset password: Comeback</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+<meta name="theme-color" content="#0B0D0F">
 <style>
-  :root {
-    --bg: #F7F6F2; --card: #FFFFFF; --ink: #17211D; --inkSoft: #5C6660;
-    --inkFaint: #98A19B; --pitch: #0E5E43; --ember: #D9541E; --line: #E5E3DC;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #15181B; --card: #1F2327; --ink: #F0F1ED; --inkSoft: #A8B0AA;
-      --inkFaint: #6B726C; --pitch: #3A9970; --ember: #E8703D; --line: #2C3034;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 24px;
-  }
-  .wrap { width: 100%; max-width: 400px; }
-  .kicker {
-    color: var(--ember); font-size: 13px; font-weight: 800;
-    letter-spacing: 2px; text-align: center; margin-bottom: 8px;
-  }
-  h1 { font-size: 22px; text-align: center; margin: 0 0 28px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
-  label { display: block; font-size: 13px; color: var(--inkSoft); font-weight: 600; margin-bottom: 8px; }
-  input {
-    width: 100%; font-size: 15px; padding: 13px 14px; border-radius: 10px;
-    border: 1px solid var(--line); background: var(--bg); color: var(--ink);
-    font-family: inherit; margin-bottom: 14px;
-  }
-  button {
-    width: 100%; padding: 14px; border-radius: 10px; border: none;
-    background: var(--pitch); color: #fff; font-size: 15px; font-weight: 700;
-    font-family: inherit; cursor: pointer;
-  }
-  button:disabled { opacity: 0.5; }
-  .err { color: var(--ember); font-size: 13px; margin-top: 12px; text-align: center; }
-  .success { text-align: center; }
-  .success p { color: var(--inkSoft); font-size: 14.5px; line-height: 1.6; }
-  .hidden { display: none; }
+:root { --inkSoft: var(--muted); --inkFaint: var(--subtle); }
+.success p { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 0; }
+.success p:first-child { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 26px !important; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
 </style>
 </head>
-<body>
+<body class="app-page">
 <div class="wrap">
-  <div class="kicker">COMEBACK</div>
-  <h1>Set a new password</h1>
+  <p class="kicker">Comeback</p>
+  <h1 class="disp">Set a new password</h1>
 
-  <div class="card" id="formCard">
+  <div class="card tabbed" id="formCard">
     <div id="checking">
       <p style="text-align:center; color: var(--inkSoft); font-size: 14px;">Checking your reset link…</p>
     </div>
@@ -72,7 +40,7 @@
     </div>
   </div>
 
-  <div class="card success hidden" id="successCard">
+  <div class="card tabbed success hidden" id="successCard">
     <p style="font-size: 17px; font-weight: 800; margin: 0 0 10px;">Password updated</p>
     <p>Go back to the Comeback app and sign in with your new password — your data is exactly where you left it.</p>
   </div>

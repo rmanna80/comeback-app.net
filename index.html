@@ -3,595 +3,429 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Comeback — Come back better than you left</title>
-<meta name="description" content="Comeback is a recovery app for injured athletes: an AI coach that drafts your daily rehab, technical, and gym work, plus a community of real comeback stories.">
+<title>Comeback: Recover. Train. Study.</title>
+<meta name="description" content="Comeback is one app for athletes: a daily rehab plan from your PT's program, training that fits your real schedule, and help keeping up in class.">
+<meta name="theme-color" content="#0B0D0F">
+<meta property="og:title" content="Comeback: Recover. Train. Study.">
+<meta property="og:description" content="A daily rehab plan, training that fits your real schedule, and help keeping up in class. One app for your whole comeback.">
+<meta property="og:image" content="https://comeback-app.net/images/app/home.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
 <style>
-  :root{
-    --black:#15120F;
-    --black-soft:#1F1B16;
-    --white:#FFFFFF;
-    --cream:#F5F1E6;
-    --paper:#F4F3EF;
-    --clay:#C1592F;
-    --clay-dark:#9C4423;
-    --forest:#23392F;
-    --forest-light:#EDF1EC;
-    --line: rgba(21,18,15,0.12);
-    --line-onblack: rgba(245,241,230,0.18);
-    color-scheme: light;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:80px;}
-  body{
-    margin:0;
-    background:var(--white);
-    color:var(--black);
-    font-family:'Archivo', -apple-system, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
-    overflow-x:hidden;
-  }
-  img{max-width:100%; display:block;}
-  a{color:inherit;}
-  .wrap{max-width:1200px; margin:0 auto; padding:0 40px;}
-
-  .disp{
-    font-family:'Anton', sans-serif;
-    font-weight:400;
-    text-transform:uppercase;
-    letter-spacing:0.01em;
-    line-height:0.92;
-    margin:0;
+  /* Hero */
+  .hero { position: relative; padding: 72px 0 140px; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); background: radial-gradient(1200px 600px at 85% 20%, rgba(61,255,122,0.10), transparent 60%), var(--bg); }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(60px, 8.4vw, 116px); }
+  .hero h1 .hit { color: var(--accent); }
+  .hero-sub { font-size: 20px; color: var(--muted); max-width: 46ch; margin: 26px 0 36px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-note { margin-top: 18px; font-size: 14px; color: var(--subtle); }
+  .phone-stage { display: flex; justify-content: center; position: relative; }
+  .phone-stage .phone { transform: rotate(4deg); }
+  .phone-stage::before {
+    content: ''; position: absolute; width: 70px; height: 520px; background: var(--accent); opacity: 0.12;
+    transform: skewX(-24deg); top: -30px; left: 50%; margin-left: -130px; border-radius: 4px;
   }
 
-  /* ---------------- NAV ---------------- */
-  header.nav{
-    position:sticky; top:0; z-index:60;
-    top:env(safe-area-inset-top,0px);
-    background:var(--black);
-    border-bottom:1px solid var(--line-onblack);
-  }
-  .nav-inner{
-    max-width:1200px; margin:0 auto; padding:20px 40px;
-    display:flex; align-items:center; justify-content:space-between; gap:24px;
-  }
-  .wordmark{
-    font-family:'Anton', sans-serif; font-size:24px; letter-spacing:0.02em;
-    color:var(--white); text-decoration:none; text-transform:uppercase;
-    display:flex; align-items:center; gap:2px;
-  }
-  .wordmark span{color:var(--clay);}
-  nav.links{display:flex; gap:34px; font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;}
-  nav.links a{text-decoration:none; color:#C7C2B7; transition:color .15s ease;}
-  nav.links a:hover{color:var(--white);}
-  .nav-cta{
-    font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
-    padding:13px 24px; background:var(--clay); color:var(--white); border-radius:2px;
-    text-decoration:none; white-space:nowrap;
-  }
-  .nav-cta:hover{background:var(--clay-dark);}
+  /* Strip */
+  .strip { background: var(--accent); color: var(--on-accent); padding: 22px 0; overflow: hidden; white-space: nowrap; margin-top: -70px; position: relative; z-index: 5; transform: skewY(-1.2deg); }
+  .strip-track { display: inline-flex; animation: scroll 38s linear infinite; }
+  .strip-track span { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 30px; text-transform: uppercase; padding: 0 22px; }
+  .strip-track span.sep { opacity: 0.45; padding: 0 4px; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ---------------- HERO ---------------- */
-  .hero{
-    background:var(--black); color:var(--white);
-    padding:64px 0 120px;
-    position:relative;
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-  }
-  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center;}
-  .hero-eyebrow{
-    display:inline-flex; align-items:center; gap:10px;
-    font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em;
-    color:var(--clay); margin-bottom:26px;
-  }
-  .hero-eyebrow::before{content:''; width:26px; height:2px; background:var(--clay);}
-  h1.headline{
-    font-size:clamp(52px,7vw,92px);
-    color:var(--white);
-  }
-  h1.headline .hit{color:var(--clay);}
-  .hero-sub{
-    font-size:19px; line-height:1.6; color:#C7C2B7; max-width:44ch; margin:28px 0 38px;
-  }
-  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
-  .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    font-weight:800; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;
-    padding:18px 30px; border-radius:2px; text-decoration:none; border:2px solid transparent; cursor:pointer;
-  }
-  .btn-clay{background:var(--clay); color:var(--white);}
-  .btn-clay:hover{background:var(--clay-dark);}
-  .btn-outline-light{border-color:rgba(245,241,230,0.4); color:var(--white);}
-  .btn-outline-light:hover{border-color:var(--white);}
-  .hero-note{margin-top:20px; font-size:13px; color:#8B8578; font-style:italic;}
+  /* Parts */
+  .part { padding: 120px 0; }
+  .part + .part { border-top: 1px solid var(--border); }
+  .part-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .part-grid.flip .p-text { order: 2; }
+  .part-grid.flip .p-image { order: 1; }
+  .p-title { font-size: clamp(44px, 5.4vw, 72px); margin-bottom: 22px; }
+  .p-title small { display: block; font-size: 0.42em; color: var(--muted); font-style: italic; margin-top: 10px; letter-spacing: 0.02em; }
+  .p-body { color: var(--muted); max-width: 44ch; margin: 0; }
+  .p-list { list-style: none; padding: 0; margin: 28px 0 0; max-width: 520px; }
+  .p-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; padding: 14px 0; border-top: 1px solid var(--border); font-size: 16px; }
+  .p-list .tag { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--kicker, var(--accent)); white-space: nowrap; }
+  .p-image { display: flex; justify-content: center; }
+  .p-image .phone { transform: rotate(-3deg); }
+  .part-grid.flip .p-image .phone { transform: rotate(3deg); }
 
-  .phone-stage{display:flex; justify-content:center; position:relative;}
-  .phone{
-    width:280px; border-radius:28px; overflow:hidden;
-    box-shadow:0 40px 80px -20px rgba(0,0,0,0.6);
-    transform:rotate(4deg);
-    border:6px solid var(--black-soft);
-    background:var(--black-soft);
-  }
-  .phone img{display:block; width:100%;}
-  .phone-tag{
-    position:absolute; top:10px; left:40%; transform:translateX(-190px) rotate(-8deg);
-    background:var(--white); color:var(--black); font-family:'Anton',sans-serif;
-    font-size:14px; letter-spacing:0.04em; padding:8px 14px; border-radius:2px;
-    text-transform:uppercase;
-  }
+  /* Coach + teams */
+  .duo { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .duo-head { max-width: 760px; margin-bottom: 56px; }
+  .duo-head h2 { font-size: clamp(42px, 5vw, 66px); }
+  .duo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .duo-card { background: var(--bg); display: grid; grid-template-columns: 1fr 170px; gap: 24px; align-items: center; padding: 32px 32px 0; overflow: hidden; }
+  .duo-card .phone { align-self: end; }
+  .duo-card h3 { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 34px; text-transform: uppercase; margin: 0 0 12px; line-height: 1; }
+  .duo-card p { color: var(--muted); margin: 0; font-size: 16px; }
+  .duo-card .phone { width: 170px; border-width: 6px; border-radius: 26px 26px 0 0; border-bottom: 0; box-shadow: none; }
 
-  /* ---------------- SCOREBOARD MARQUEE ---------------- */
-  .scoreboard{
-    background:var(--clay); color:var(--white);
-    padding:26px 0; overflow:hidden; white-space:nowrap; margin-top:-64px; position:relative; z-index:5;
-  }
-  .scoreboard-track{display:inline-flex; animation:scroll 34s linear infinite;}
-  .scoreboard-track .item{
-    display:inline-flex; align-items:baseline; gap:14px; padding:0 42px;
-  }
-  .scoreboard-track .num{font-family:'Anton',sans-serif; font-size:34px; letter-spacing:0.01em;}
-  .scoreboard-track .lbl{font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; opacity:0.88;}
-  .scoreboard-track .sep{opacity:0.5; font-size:22px; padding:0 6px;}
-  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
-  @media (prefers-reduced-motion: reduce){ .scoreboard-track{animation:none;} }
+  /* Steps */
+  .steps-sec { padding: 120px 0; }
+  .steps-sec h2 { font-size: clamp(42px, 5vw, 66px); margin-bottom: 56px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .step .num { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 72px; line-height: 1; color: var(--accent); margin-bottom: 14px; }
+  .step h3 { font-family: var(--display); font-weight: 700; font-size: 26px; text-transform: uppercase; margin: 0 0 8px; }
+  .step p { color: var(--muted); margin: 0; font-size: 16px; }
 
-  /* ---------------- FEATURE BLOCKS ---------------- */
-  .feature-block{padding:130px 0;}
-  .feature-block.on-black{background:var(--black); color:var(--white);}
-  .feature-block.on-white{background:var(--white); color:var(--black);}
+  /* Pricing */
+  .pricing { padding: 120px 0; border-top: 1px solid var(--border); }
+  .pricing h2 { font-size: clamp(42px, 5vw, 66px); margin-bottom: 18px; }
+  .price-intro { color: var(--muted); max-width: 52ch; margin: 0 0 52px; }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .price { display: flex; flex-direction: column; }
+  .price.featured { border-color: var(--accent); }
+  .price-badge { position: absolute; top: -13px; right: 22px; background: var(--accent); color: var(--on-accent); font-family: var(--display); font-weight: 700; font-style: italic; font-size: 15px; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; }
+  .price-name { font-family: var(--display); font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .price-amount { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 60px; line-height: 1; margin: 14px 0 4px; }
+  .price-amount .per { font-family: var(--body); font-style: normal; font-weight: 500; font-size: 16px; color: var(--muted); }
+  .price-note { color: var(--subtle); font-size: 14px; min-height: 22px; margin-bottom: 20px; }
+  .price ul { list-style: none; padding: 18px 0 0; margin: 0; border-top: 1px solid var(--border); flex: 1; }
+  .price li { display: flex; gap: 10px; padding: 7px 0; font-size: 15.5px; color: var(--muted); }
+  .price li::before { content: '/'; color: var(--accent); font-weight: 700; font-style: italic; flex-shrink: 0; }
+  .price li strong { color: var(--text); font-weight: 600; }
+  .price-foot { color: var(--subtle); font-size: 14px; margin-top: 24px; }
 
-  .feat-grid{display:grid; grid-template-columns:1fr 1fr; gap:76px; align-items:center;}
-  .feat-grid.reverse .f-text{order:2;}
-  .feat-grid.reverse .f-image{order:1;}
+  /* FAQ */
+  .faq { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); }
+  .faq h2 { font-size: clamp(42px, 5vw, 66px); margin-bottom: 44px; }
+  .faq-list { max-width: 840px; }
+  details { border-top: 1px solid var(--border); }
+  details:last-child { border-bottom: 1px solid var(--border); }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 2px; font-weight: 600; font-size: 18px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font-family: var(--display); font-weight: 800; font-size: 30px; color: var(--accent); line-height: 1; transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 2px 24px; color: var(--muted); max-width: 66ch; }
+  details a { color: var(--accent); }
 
-  .f-kicker{font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--clay); margin-bottom:18px;}
-  .f-title{font-size:clamp(32px,4vw,46px); margin-bottom:22px;}
-  .on-black .f-body{color:#C7C2B7;}
-  .on-white .f-body{color:#4A453D;}
-  .f-body{font-size:17px; line-height:1.7; max-width:42ch;}
-  .f-list{list-style:none; padding:0; margin:26px 0 0;}
-  .f-list li{
-    font-size:15px; padding:12px 0; border-top:1px solid var(--line);
-    display:flex; justify-content:space-between; gap:16px;
-  }
-  .on-black .f-list li{border-top-color:var(--line-onblack); color:#C7C2B7;}
-  .f-list li span.tag{font-weight:800; color:var(--clay); font-size:12px; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap;}
+  /* Final CTA */
+  .cta { padding: 140px 0 150px; text-align: center; clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); background: radial-gradient(900px 500px at 50% 60%, rgba(61,255,122,0.12), transparent 65%), var(--bg); margin-top: -1px; }
+  .cta h2 { font-size: clamp(54px, 8vw, 104px); margin: 0 auto 22px; }
+  .cta p { color: var(--muted); max-width: 46ch; margin: 0 auto 34px; font-size: 19px; }
 
-  .f-image{display:flex; justify-content:center;}
-  .f-image .phone{width:260px; transform:rotate(-3deg); box-shadow:0 30px 60px -18px rgba(0,0,0,0.45);}
-  .on-black .f-image .phone{box-shadow:0 30px 70px -14px rgba(0,0,0,0.7);}
-
-  /* ---------------- HOW IT WORKS ---------------- */
-  .how{background:var(--paper); padding:130px 0;}
-  .how-head{max-width:640px; margin-bottom:80px;}
-  .how-head .f-kicker{margin-bottom:16px;}
-  .how-head h2{font-size:clamp(34px,4.5vw,54px);}
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border:1px solid var(--line);}
-  .step{background:var(--white); padding:44px 34px;}
-  .step-index{font-family:'Anton',sans-serif; font-size:56px; color:var(--clay); line-height:1; margin-bottom:22px;}
-  .step h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:22px; margin:0 0 14px; letter-spacing:0.01em;}
-  .step p{font-size:15px; line-height:1.65; color:#4A453D; margin:0;}
-
-  /* ---------------- PRICING ---------------- */
-  .pricing{background:var(--white); padding:130px 0;}
-  .price-head{max-width:640px; margin-bottom:70px;}
-  .price-head h2{font-size:clamp(34px,4.5vw,54px);}
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
-  .price-card{
-    border:1px solid var(--line); border-radius:2px; padding:38px 30px;
-    display:flex; flex-direction:column;
-  }
-  .price-card.featured{background:var(--black); color:var(--white); border-color:var(--black); position:relative;}
-  .price-badge{
-    position:absolute; top:-14px; left:30px;
-    background:var(--clay); color:var(--white); font-size:11px; font-weight:800;
-    text-transform:uppercase; letter-spacing:0.06em; padding:6px 12px; border-radius:2px;
-  }
-  .price-name{font-family:'Anton',sans-serif; font-size:22px; text-transform:uppercase; letter-spacing:0.01em;}
-  .price-amount{font-family:'Anton',sans-serif; font-size:52px; margin:18px 0 2px; letter-spacing:0.01em;}
-  .price-amount .per{font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; text-transform:none; letter-spacing:0; opacity:0.6;}
-  .price-note{font-size:13px; color:#8B8578; margin-bottom:28px; min-height:18px;}
-  .featured .price-note{color:#B0AB9F;}
-  .price-feats{list-style:none; padding:20px 0 0; margin:0 0 30px; border-top:1px solid var(--line); flex:1;}
-  .featured .price-feats{border-top-color:var(--line-onblack);}
-  .price-feats li{padding:11px 0; font-size:14.5px; display:flex; gap:10px; align-items:flex-start;}
-  .price-feats li::before{content:'—'; color:var(--clay); font-weight:800; flex-shrink:0;}
-  .price-cta{
-    text-align:center; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
-    padding:16px; border-radius:2px; text-decoration:none; border:2px solid var(--black);
-  }
-  .price-cta:hover{background:var(--black); color:var(--white);}
-  .featured .price-cta{border-color:var(--clay); background:var(--clay); color:var(--white);}
-  .featured .price-cta:hover{background:var(--clay-dark); border-color:var(--clay-dark);}
-  .price-foot-note{
-    margin-top:28px; font-size:13.5px; color:#8B8578; display:flex; align-items:center; gap:10px;
-  }
-  .price-foot-note::before{content:''; width:16px; height:16px; border-radius:50%; border:1.5px solid #8B8578; flex-shrink:0;}
-
-  /* ---------------- FAQ ---------------- */
-  .faq{background:var(--paper); padding:130px 0;}
-  .faq-head{max-width:640px; margin-bottom:64px;}
-  .faq-head h2{font-size:clamp(34px,4.5vw,54px);}
-  .faq-list{max-width:820px;}
-  .faq-item{border-top:1px solid var(--line);}
-  .faq-item:last-child{border-bottom:1px solid var(--line);}
-  .faq-q{
-    width:100%; text-align:left; background:none; border:none; cursor:pointer;
-    display:flex; align-items:center; justify-content:space-between; gap:24px;
-    padding:26px 4px; font-family:'Archivo',sans-serif; font-weight:700; font-size:17px;
-    color:var(--black);
-  }
-  .faq-q .plus{
-    font-family:'Anton',sans-serif; font-size:22px; color:var(--clay); flex-shrink:0;
-    transition:transform .2s ease;
-  }
-  .faq-item[data-open="true"] .plus{transform:rotate(45deg);}
-  .faq-a{
-    max-height:0; overflow:hidden; transition:max-height .25s ease;
-  }
-  .faq-a-inner{padding:0 4px 26px; font-size:15px; line-height:1.7; color:#4A453D; max-width:62ch;}
-
-  /* ---------------- FINAL CTA ---------------- */
-  .cta-band{
-    background:var(--black); color:var(--white); text-align:center;
-    padding:130px 0 140px; position:relative;
-    clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
-    margin-top:-1px;
-  }
-  .cta-band h2{font-size:clamp(40px,6vw,68px); max-width:18ch; margin:0 auto 24px;}
-  .cta-band p{font-size:18px; color:#C7C2B7; max-width:46ch; margin:0 auto 38px;}
-
-  /* ---------------- FOOTER ---------------- */
-  footer{background:var(--black-soft); color:#B0AB9F; padding:70px 0 34px; border-top:1px solid var(--line-onblack);}
-  .foot-top{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; padding-bottom:44px; border-bottom:1px solid var(--line-onblack); margin-bottom:28px;}
-  .foot-brand .wordmark{margin-bottom:16px;}
-  .foot-brand p{max-width:34ch; font-size:14.5px; line-height:1.65; color:#8B8578;}
-  .foot-cols{display:flex; gap:64px; flex-wrap:wrap;}
-  .foot-col h4{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#6E6A5F; font-weight:800; margin:0 0 16px;}
-  .foot-col a{display:block; font-size:14.5px; color:#D6D2C6; text-decoration:none; margin-bottom:12px;}
-  .foot-col a:hover{color:var(--clay);}
-  .foot-bottom{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:#6E6A5F;}
-
-  /* ---------------- RESPONSIVE ---------------- */
-  @media (max-width:920px){
-    nav.links{display:none;}
-    .wrap{padding:0 24px;}
-    .nav-inner{padding:16px 24px;}
-    .hero{padding:48px 0 90px; clip-path:polygon(0 0,100% 0,100% 95%,0 100%);}
-    .hero-grid{grid-template-columns:1fr; gap:52px;}
-    .phone-stage{order:-1;}
-    .phone{width:230px; transform:rotate(0deg); margin:0 auto;}
-    .phone-tag{display:none;}
-    .scoreboard{margin-top:-40px;}
-    .feature-block{padding:90px 0;}
-    .feat-grid{grid-template-columns:1fr; gap:40px;}
-    .feat-grid.reverse .f-text{order:1;} .feat-grid.reverse .f-image{order:2;}
-    .f-image .phone{width:220px; transform:rotate(0);}
-    .how{padding:90px 0;}
-    .steps{grid-template-columns:1fr;}
-    .pricing{padding:90px 0;}
-    .price-grid{grid-template-columns:1fr;}
-    .faq{padding:90px 0;}
-    .faq-q{font-size:16px;}
-    .cta-band{padding:90px 0 100px;}
+  @media (max-width: 900px) {
+    .hero { padding: 44px 0 110px; clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%); }
+    .hero-grid, .part-grid, .duo-grid { grid-template-columns: 1fr; }
+    .hero-grid { gap: 52px; }
+    .phone-stage .phone, .p-image .phone, .part-grid.flip .p-image .phone { transform: none; }
+    .phone-stage::before { display: none; }
+    .strip { margin-top: -44px; }
+    .strip-track span { font-size: 24px; }
+    .part, .duo, .steps-sec, .pricing, .faq { padding: 84px 0; }
+    .part-grid { gap: 44px; }
+    .part-grid.flip .p-text { order: 1; }
+    .part-grid.flip .p-image { order: 2; }
+    .duo-card { grid-template-columns: 1fr; padding: 26px 26px 0; }
+    .duo-card p { margin-bottom: 8px; }
+    .duo-card .phone { justify-self: center; }
+    .steps, .price-grid { grid-template-columns: 1fr; }
+    .price-grid { gap: 28px; }
+    .cta { padding: 100px 0 110px; }
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="nav">
   <div class="nav-inner">
-    <a href="#top" class="wordmark">COME<span>BACK</span></a>
-    <nav class="links">
-      <a href="#how">How it works</a>
-      <a href="#stories">Stories</a>
-      <a href="#pricing">Pricing</a>
+    <a href="#top" class="wordmark" aria-label="Comeback home">Comeback</a>
+    <nav class="links" aria-label="Main">
+      <a href="#recover">Recover</a>
+      <a href="#train">Train</a>
+      <a href="#learn">Learn</a>
+      <a href="#pricing">Pro</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a href="#notify" class="nav-cta">Get notified</a>
+    <a href="#get" class="btn btn-primary js-store">Get the app</a>
   </div>
 </header>
 
-<main id="top">
+<main id="main">
+  <span id="top"></span>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="hero-eyebrow">Built for injured athletes</div>
-        <h1 class="disp headline">Come back<br>better than<br>you <span class="hit">left.</span></h1>
-        <p class="hero-sub">No more guessing what today's session should be. Comeback turns your PT plan and your recovery phase into daily rehab, technical, and gym work — built for you, adjusted as you heal.</p>
+        <p class="kicker">Recover. Train. Study.</p>
+        <h1 class="disp">Built for<br>the <span class="hit">comeback.</span></h1>
+        <p class="hero-sub">A daily rehab plan from your PT's program, training that fits your real schedule, and help keeping up in class. One app. Use one part or all three.</p>
         <div class="hero-ctas">
-          <a href="#notify" class="btn btn-clay">Get notified at launch</a>
-          <a href="#how" class="btn btn-outline-light">See how it works</a>
+          <a href="#get" class="btn btn-primary js-store">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.27-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.39-.92-2.41-3.68zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.02.61-2.67 1.37-.58.67-1.1 1.76-.96 2.8 1.02.08 2.06-.52 2.69-1.28z"/></svg>
+            <span class="js-store-label">Get it on the App Store</span>
+          </a>
+          <a href="#how" class="btn btn-secondary">How it works</a>
         </div>
-        <div class="hero-note">Coming soon to the App Store as Comeback: Injury Recovery.</div>
+        <p class="hero-note">For iPhone. Free to start, for athletes 13 and older.</p>
       </div>
       <div class="phone-stage">
-        <div class="phone-tag">No days off</div>
-        <div class="phone">
-          <img src="images/welcome_screen_edited.jpg" alt="Comeback app welcome screen">
-        </div>
+        <div class="phone"><img src="/images/app/home.jpg" width="786" height="1704" alt="The Comeback Home screen: today's adjustments, the recovery checklist and the next training window."></div>
       </div>
     </div>
   </section>
 
-  <!-- SCOREBOARD -->
-  <div class="scoreboard" id="stories">
-    <div class="scoreboard-track" id="marqueeTrack"></div>
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track" id="stripTrack"></div>
   </div>
 
-  <!-- FEATURE 1 -->
-  <section class="feature-block on-white">
-    <div class="wrap feat-grid">
-      <div class="f-text">
-        <div class="f-kicker">AI Coach</div>
-        <h2 class="disp f-title">A plan built<br>from where you<br>actually are</h2>
-        <p class="f-body">Tell Comeback your injury, your phase, and what your PT cleared you for. The AI coach drafts today's session or the full week — nothing changes on your plan until you approve it.</p>
-        <ul class="f-list">
-          <li>Reads your recovery phase and recent check-ins <span class="tag">Adaptive</span></li>
-          <li>Blends rehab, technical, and gym work in one session <span class="tag">All-in-one</span></li>
-          <li>Flags when something needs a PT check first <span class="tag">Safety</span></li>
+  <section class="part" id="recover" style="--kicker: var(--pitch)">
+    <div class="wrap part-grid">
+      <div class="p-text">
+        <p class="kicker">Recover</p>
+        <h2 class="disp p-title">Your PT's plan,<br>one day at a time.</h2>
+        <p class="p-body">Turn what your physical therapist or athletic trainer gave you into a daily checklist. Tap a task for how-to videos, check in on pain and progress, and hit milestones on the way back.</p>
+        <ul class="p-list">
+          <li>The coach drafts today or your whole week, inside your limits <span class="tag">Coach</span></li>
+          <li>Daily check-ins: pain, swelling, confidence and sleep <span class="tag">Track</span></li>
+          <li>Milestones, benchmarks and stories from athletes who came back <span class="tag">Motivation</span></li>
         </ul>
       </div>
-      <div class="f-image">
-        <div class="phone">
-          <img src="images/ai_day_edited.jpg" alt="Comeback app AI coach screen">
-        </div>
+      <div class="p-image">
+        <div class="phone"><img src="/images/app/recover.jpg" width="786" height="1704" loading="lazy" alt="Recover: day 56 of an ACL comeback with today's rehab checklist and a 9-day streak."></div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURE 2 -->
-  <section class="feature-block on-black">
-    <div class="wrap feat-grid reverse">
-      <div class="f-text">
-        <div class="f-kicker">Daily Goals</div>
-        <h2 class="disp f-title">Broken into<br>the days you'll<br>actually run</h2>
-        <p class="f-body">A full week of rehab sets, film study, agility, and strength work, laid out day by day with reps, sets, and the reasoning behind each one — so you know exactly what today demands.</p>
-        <ul class="f-list">
-          <li>Day-by-day goals you check off as you go <span class="tag">Structured</span></li>
-          <li>Built-in cautions specific to your injury <span class="tag">Protected</span></li>
-          <li>Progresses automatically with your check-ins <span class="tag">Adaptive</span></li>
+  <section class="part" id="train">
+    <div class="wrap part-grid flip">
+      <div class="p-text">
+        <p class="kicker">Train</p>
+        <h2 class="disp p-title">Find the time<br>you already have.</h2>
+        <p class="p-body">Add your classes, practices and games, or sync the calendars on your phone. Comeback finds the open windows and fills them with short sessions built for your sport and position.</p>
+        <ul class="p-list">
+          <li>Never stacks hard work right after practice or before a game <span class="tag">Smart</span></li>
+          <li>50+ drills across 16 sports, with coaching cues <span class="tag">Drills</span></li>
+          <li>A quick readiness check-in keeps each day realistic <span class="tag">Recovery</span></li>
         </ul>
       </div>
-      <div class="f-image">
-        <div class="phone">
-          <img src="images/ai_week_edited.jpg" alt="Comeback app showing a weekly plan drafted by the AI coach">
-        </div>
+      <div class="p-image">
+        <div class="phone"><img src="/images/app/train.jpg" width="786" height="1704" loading="lazy" alt="Train: 625 open minutes today and the next 20-minute window for positional film study."></div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURE 3 -->
-  <section class="feature-block on-white">
-    <div class="wrap feat-grid">
-      <div class="f-text">
-        <div class="f-kicker">Comeback Stories</div>
-        <h2 class="disp f-title">You're not the<br>first one back<br>from this</h2>
-        <p class="f-body">Read how other athletes — from your exact injury, and the pros who've been through it — made it back. Then, once you're through it, share your own story for the next person starting where you are now.</p>
-        <ul class="f-list">
-          <li>Filter stories by injury, so the parallels are real <span class="tag">Relevant</span></li>
-          <li>Featured comebacks from pro and college athletes <span class="tag">Proven</span></li>
-          <li>Share milestones straight from your tracker <span class="tag">Community</span></li>
+  <section class="part" id="learn" style="--kicker: var(--academic)">
+    <div class="wrap part-grid">
+      <div class="p-text">
+        <p class="kicker">Learn</p>
+        <h2 class="disp p-title">Keep up in class,<br>even on the road.</h2>
+        <p class="p-body">Add your courses and assignments, or bring them in from Canvas. Upload notes or a syllabus to get study guides, practice questions and a tutor that teaches without doing the work for you.</p>
+        <ul class="p-list">
+          <li>Catch-up plans for classes you miss while traveling <span class="tag">Travel</span></li>
+          <li>Follows each course's AI policy <span class="tag">Integrity</span></li>
+          <li>Due dates, a focus timer and a mistake log <span class="tag">Study</span></li>
         </ul>
       </div>
-      <div class="f-image">
-        <div class="phone">
-          <img src="images/stories_edited.jpg" alt="Comeback app stories feed">
-        </div>
+      <div class="p-image">
+        <div class="phone"><img src="/images/app/learn.jpg" width="786" height="1704" loading="lazy" alt="Learn: classes with assignments due this week and buttons to upload materials or catch up."></div>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section class="how" id="how">
+  <section class="duo" id="coach">
     <div class="wrap">
-      <div class="how-head">
-        <div class="f-kicker">Getting Started</div>
-        <h2 class="disp">Three steps to your first plan</h2>
+      <div class="duo-head">
+        <p class="kicker">Coach and teams</p>
+        <h2 class="disp">A coach in your pocket.<br>A team behind you.</h2>
       </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-index disp">01</div>
-          <h3>Set up your comeback</h3>
-          <p>Enter your injury, the date it happened, and what your PT has cleared you for so far.</p>
+      <div class="duo-grid">
+        <div class="card tabbed duo-card">
+          <div>
+            <h3>Coach</h3>
+            <p>Ask about your day, a drill or what your PT's instructions mean. Answers stay inside your limits, and anything about pain points you to a real professional.</p>
+          </div>
+          <div class="phone"><img src="/images/app/coach.jpg" width="786" height="1704" loading="lazy" alt="The Coach tab: training coach, study tutor and recovery explainer."></div>
         </div>
-        <div class="step">
-          <div class="step-index disp">02</div>
-          <h3>Get today's plan</h3>
-          <p>The AI coach drafts a session from your phase and recent check-ins. Review it, then approve.</p>
-        </div>
-        <div class="step">
-          <div class="step-index disp">03</div>
-          <h3>Log, heal, repeat</h3>
-          <p>Check in on how it felt. Comeback adjusts tomorrow's plan and moves you into the next phase when you're ready.</p>
+        <div class="card tabbed duo-card" style="--tab: var(--athletic)">
+          <div>
+            <h3>Teams</h3>
+            <p>Join your team with a code, take on challenges together, and choose exactly what teammates see. Injury details, schedules and check-ins are never shared.</p>
+          </div>
+          <div class="phone"><img src="/images/app/teams.jpg" width="786" height="1704" loading="lazy" alt="Teams and challenges: join with a code or create a team."></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
+  <section class="steps-sec" id="how">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2 class="disp">Three steps.<br>Then get to work.</h2>
+      <div class="steps">
+        <div class="card tabbed step">
+          <div class="num">01</div>
+          <h3>Pick your parts</h3>
+          <p>Turn on Recover, Train, Learn or all three. Home shows only what you use.</p>
+        </div>
+        <div class="card tabbed step">
+          <div class="num">02</div>
+          <h3>Add your plan</h3>
+          <p>Your PT's program, your classes and practices, your courses. Type it in, snap a photo or sync.</p>
+        </div>
+        <div class="card tabbed step">
+          <div class="num">03</div>
+          <h3>Show up, check in</h3>
+          <p>Check off today, log how it felt, and Comeback adjusts tomorrow around how you're doing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="pricing" id="pricing">
     <div class="wrap">
-      <div class="price-head">
-        <div class="f-kicker">Pricing</div>
-        <h2 class="disp">Free to start your comeback</h2>
-      </div>
+      <p class="kicker">Comeback Pro</p>
+      <h2 class="disp">Free to start.<br>Pro when you're ready.</h2>
+      <p class="price-intro">The free plan works on its own. One Pro subscription takes the limits off Recover, Train and Learn.</p>
       <div class="price-grid">
-
-        <div class="price-card">
+        <div class="card price">
           <div class="price-name">Free</div>
-          <div class="price-amount disp">$0</div>
-          <div class="price-note">Enough to get your comeback started.</div>
-          <ul class="price-feats">
-            <li>3 AI-drafted plans per month</li>
-            <li>Daily goal tracking</li>
-            <li>Full comeback stories feed</li>
-            <li>Share your own milestones</li>
+          <div class="price-amount">$0</div>
+          <div class="price-note">Everything you need to get started.</div>
+          <ul>
+            <li><span><strong>Recover:</strong> daily checklist, check-ins, milestones and stories; 3 coach day plans a month</span></li>
+            <li><span><strong>Train:</strong> 3 training windows a day, 1 synced calendar, 7-day plans</span></li>
+            <li><span><strong>Learn:</strong> 2 study walkthroughs a month, 15 tutor messages a day</span></li>
+            <li><span>Teams and challenges</span></li>
           </ul>
-          <a href="#notify" class="price-cta">Get notified</a>
         </div>
-
-        <div class="price-card">
+        <div class="card price">
           <div class="price-name">Pro Monthly</div>
-          <div class="price-amount disp">$7.99<span class="per">/mo</span></div>
-          <div class="price-note">Billed monthly, cancel anytime.</div>
-          <ul class="price-feats">
-            <li>Unlimited AI-drafted plans</li>
-            <li>Full week drafts, not just today</li>
-            <li>Priority plan regeneration</li>
-            <li>Everything in Free</li>
+          <div class="price-amount">$7.99<span class="per"> / month</span></div>
+          <div class="price-note">Billed monthly. Cancel anytime.</div>
+          <ul>
+            <li><span><strong>Recover:</strong> unlimited day plans, week plans, and more questions for the explainer</span></li>
+            <li><span><strong>Train:</strong> unlimited windows, up to 10 calendars, plans up to 12 weeks</span></li>
+            <li><span><strong>Learn:</strong> 30 walkthroughs a month, 100 tutor messages a day</span></li>
+            <li><span>Everything in Free</span></li>
           </ul>
-          <a href="#notify" class="price-cta">Get notified</a>
         </div>
-
-        <div class="price-card featured">
+        <div class="card price featured">
           <div class="price-badge">Save 48%</div>
           <div class="price-name">Pro Annual</div>
-          <div class="price-amount disp">$49.99<span class="per">/yr</span></div>
-          <div class="price-note">Works out to $4.17/mo — the full comeback covered.</div>
-          <ul class="price-feats">
-            <li>Unlimited AI-drafted plans</li>
-            <li>Full week drafts, not just today</li>
-            <li>Priority plan regeneration</li>
-            <li>Everything in Free</li>
+          <div class="price-amount">$49.99<span class="per"> / year</span></div>
+          <div class="price-note">About $4.17 a month.</div>
+          <ul>
+            <li><span><strong>Recover:</strong> unlimited day plans, week plans, and more questions for the explainer</span></li>
+            <li><span><strong>Train:</strong> unlimited windows, up to 10 calendars, plans up to 12 weeks</span></li>
+            <li><span><strong>Learn:</strong> 30 walkthroughs a month, 100 tutor messages a day</span></li>
+            <li><span>Everything in Free</span></li>
           </ul>
-          <a href="#notify" class="price-cta">Get notified</a>
         </div>
-
       </div>
-      <div class="price-foot-note">Managed through the App Store — cancel in your iPhone settings anytime, no email or call needed.</div>
+      <p class="price-foot">Prices in US dollars. Subscriptions are sold through the App Store and renew automatically until you cancel in your iPhone's Settings.</p>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq" id="faq">
     <div class="wrap">
-      <div class="faq-head">
-        <div class="f-kicker">Before you start</div>
-        <h2 class="disp">Questions worth answering upfront</h2>
-      </div>
-      <div class="faq-list" id="faqList">
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Is this medical advice?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">No. Comeback drafts goals and tracks your progress — it doesn't diagnose, prescribe, or replace your physical therapist. Your PT's plan always comes first; Comeback is built to work alongside it, not instead of it.</div></div>
-        </div>
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            What if my injury isn't listed?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Every body region has a general option alongside the specific ones, and you can describe your injury in your own words during setup. The AI coach reads that description when it drafts your plan.</div></div>
-        </div>
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Does it work for any sport?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Yes — you enter your own sport during setup, and it's not limited to a fixed list. The technical and gym work in each plan is built around what you tell us.</div></div>
-        </div>
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Can my PT or parents see my progress?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">If you want them to. Comeback can generate a PIN-protected link showing your streak, day count, and milestones — no account or app install needed on their end. Personal notes and reflections stay private either way; that link only ever shows what you'd be comfortable handing someone your phone to see.</div></div>
-        </div>
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            What happens if I get a different injury later?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Mark your current comeback complete and start a new one — your past comeback, including its milestones, is saved and stays visible in your history.</div></div>
-        </div>
-
-        <div class="faq-item" data-open="false">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Can I cancel anytime?
-            <span class="plus">+</span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Yes. Pro is billed through the App Store, so you cancel the same way you'd cancel any other subscription — in your iPhone's Settings, no email or call needed. You'll keep Pro until the current billing period ends.</div></div>
-        </div>
-
+      <p class="kicker">FAQ</p>
+      <h2 class="disp">Before you start</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Is Comeback medical advice?</summary>
+          <p>No. Comeback organizes the plan your physical therapist, athletic trainer or doctor gave you and suggests general training. It doesn't diagnose anything or clear you to play. Your clinician's plan always comes first, and if something hurts, stop and talk to them.</p>
+        </details>
+        <details>
+          <summary>I already use Comeback: Injury Recovery. What happens?</summary>
+          <p>Comeback 2.0 is an update to the same app. Same account, and your recovery plan, progress and Pro subscription come with you. Train and Learn are new; turn them on if you want them.</p>
+        </details>
+        <details>
+          <summary>Does it work for my sport?</summary>
+          <p>Yes. You pick your sport and position during setup, and drills, plans and the coach's suggestions are built around them.</p>
+        </details>
+        <details>
+          <summary>Do I have to use all three parts?</summary>
+          <p>No. Each part works on its own. Turn on only what you need, and change it anytime in Profile.</p>
+        </details>
+        <details>
+          <summary>Who can use Comeback?</summary>
+          <p>Anyone 13 and older. Athletes under 18 can use everything except posting community stories, creating teams and invite rewards, and they start hidden on challenge leaderboards.</p>
+        </details>
+        <details>
+          <summary>What does the AI see?</summary>
+          <p>Only what each feature needs, and never your name or email. AI features are off until you allow them, and our AI provider doesn't train its models on your data. The <a href="https://comeback-api-prod.onrender.com/legal/privacy">Privacy Policy</a> lists exactly what's sent.</p>
+        </details>
+        <details>
+          <summary>Can my coach or teammates see my data?</summary>
+          <p>Only what you switch on in a team: training counts, goal names and achievements. Your injury details, schedule, check-ins and journal are never shared.</p>
+        </details>
+        <details>
+          <summary>How do I cancel Pro?</summary>
+          <p>Pro is sold through the App Store. Open your iPhone's Settings, tap your name, then Subscriptions, then Comeback. You keep Pro until the end of the period you paid for.</p>
+        </details>
+        <details>
+          <summary>How do I delete my account?</summary>
+          <p>In the app, go to Profile, then Delete account. Everything is deleted. Deleting the app or your account doesn't cancel a subscription, so cancel that in Settings first.</p>
+        </details>
       </div>
     </div>
   </section>
 
+  <section class="cta" id="get">
+    <div class="wrap">
+      <p class="kicker" style="justify-content:center">Get Comeback</p>
+      <h2 class="disp">Your comeback<br>starts today.</h2>
+      <p>Free to download on iPhone. Search "Comeback" on the App Store, or tap below.</p>
+      <a href="#get" class="btn btn-primary js-store"><span class="js-store-label">Get it on the App Store</span></a>
+    </div>
+  </section>
 </main>
 
-<footer>
+<footer class="site">
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <a href="#top" class="wordmark">COME<span>BACK</span></a>
-        <p>Come back better than you left. A recovery companion for injured athletes, built with the PT room and the practice field both in mind.</p>
+        <a href="#top" class="wordmark">Comeback</a>
+        <p>Recover. Train. Study. One app for athletes working their way back to their best.</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h4>Product</h4>
-          <a href="#how">How it works</a>
-          <a href="#stories">Stories</a>
-          <a href="#pricing">Pricing</a>
+          <h2>App</h2>
+          <a href="#recover">Recover</a>
+          <a href="#train">Train</a>
+          <a href="#learn">Learn</a>
+          <a href="#pricing">Comeback Pro</a>
         </div>
         <div class="foot-col">
-          <h4>Support</h4>
-          <a href="support.html" target="_blank" rel="noopener">Support</a>
-          <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+          <h2>Help</h2>
+          <a href="/support.html">Support</a>
+          <a href="https://comeback-api-prod.onrender.com/legal/privacy">Privacy Policy</a>
+          <a href="https://comeback-api-prod.onrender.com/legal/terms">Terms of Service</a>
           <a href="mailto:comeback@comeback-app.net">comeback@comeback-app.net</a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Comeback. All rights reserved.</span>
-      <span>Comeback: Injury Recovery</span>
+      <span>© 2026 Comeback Technologies LLC</span>
+      <span>Comeback is not medical advice. Follow your clinician's plan.</span>
     </div>
   </div>
 </footer>
 
 <script>
-  function toggleFaq(btn) {
-    var item = btn.closest('.faq-item');
-    var answer = item.querySelector('.faq-a');
-    var isOpen = item.getAttribute('data-open') === 'true';
-    if (isOpen) {
-      item.setAttribute('data-open', 'false');
-      answer.style.maxHeight = null;
-    } else {
-      item.setAttribute('data-open', 'true');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  }
-
-  var stats = [
-    {n:"2,097 YDS", l:"Adrian Peterson — 9 months after ACL & MCL surgery"},
-    {n:"941 DAYS", l:"Klay Thompson — between NBA games, then a championship"},
-    {n:"50 PTS", l:"Joel Embiid — in the playoffs, months after meniscus surgery"},
-    {n:"COMEBACK", l:"Shaun Livingston — back on the floor after doctors discussed amputation"},
-    {n:"YOUR STORY", l:"Could be next"}
-  ];
-  var track = document.getElementById('marqueeTrack');
-  var html = '';
-  for (var r = 0; r < 2; r++) {
-    stats.forEach(function(s){
-      html += '<span class="item"><span class="num disp">'+s.n+'</span><span class="lbl">'+s.l+'</span></span><span class="sep">/</span>';
+  // Paste the App Store link here once it's known (App Store Connect → App Information → Apple ID),
+  // for example 'https://apps.apple.com/app/id1234567890'. Until then the buttons jump to the
+  // "Get Comeback" section, which tells people to search the App Store.
+  var APP_STORE_URL = '';
+  if (APP_STORE_URL) {
+    document.querySelectorAll('.js-store').forEach(function (a) {
+      a.href = APP_STORE_URL;
+      a.target = '_blank';
+      a.rel = 'noopener';
     });
   }
-  track.innerHTML = html;
-</script>
 
+  var items = ['Recover', 'Train', 'Study', 'Day-by-day rehab', '50+ drills', '16 sports', 'Canvas sync', 'Teams and challenges', 'No days off from getting better'];
+  var html = '';
+  for (var r = 0; r < 2; r++) {
+    items.forEach(function (t) { html += '<span>' + t + '</span><span class="sep">/</span>'; });
+  }
+  document.getElementById('stripTrack').innerHTML = html;
+</script>
 </body>
 </html>
