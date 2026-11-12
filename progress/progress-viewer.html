@@ -3,89 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comeback — Progress</title>
+<title>Progress: Comeback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+<meta name="theme-color" content="#0B0D0F">
 <style>
-  :root {
-    --bg: #F7F6F2; --card: #FFFFFF; --ink: #17211D; --inkSoft: #5C6660;
-    --inkFaint: #98A19B; --pitch: #0E5E43; --pitchSoft: #E3EFE8;
-    --ember: #D9541E; --line: #E5E3DC;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #15181B; --card: #1F2327; --ink: #F0F1ED; --inkSoft: #A8B0AA;
-      --inkFaint: #6B726C; --pitch: #3A9970; --pitchSoft: #16332A;
-      --ember: #E8703D; --line: #2C3034;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 24px;
-  }
-  .wrap { width: 100%; max-width: 420px; }
-  .kicker {
-    color: var(--ember); font-size: 13px; font-weight: 800;
-    letter-spacing: 2px; text-align: center; margin-bottom: 8px;
-  }
-  h1 { font-size: 22px; text-align: center; margin: 0 0 28px; }
-  .card {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 16px; padding: 24px;
-  }
-  label { display: block; font-size: 13px; color: var(--inkSoft); font-weight: 600; margin-bottom: 8px; }
-  input {
-    width: 100%; font-size: 24px; letter-spacing: 8px; text-align: center;
-    padding: 14px; border-radius: 10px; border: 1px solid var(--line);
-    background: var(--bg); color: var(--ink); font-family: inherit;
-  }
-  button {
-    width: 100%; margin-top: 16px; padding: 14px; border-radius: 10px;
-    border: none; background: var(--pitch); color: #fff; font-size: 15px;
-    font-weight: 700; font-family: inherit; cursor: pointer;
-  }
-  button:disabled { opacity: 0.5; }
-  .err { color: var(--ember); font-size: 13px; margin-top: 10px; text-align: center; }
-  .hidden { display: none; }
-  .name { font-size: 20px; font-weight: 800; margin: 0 0 2px; }
-  .sub { color: var(--inkSoft); font-size: 14px; margin: 0 0 20px; }
-  .stats { display: flex; gap: 10px; margin-bottom: 20px; }
-  .stat {
-    flex: 1; background: var(--bg); border-radius: 10px; padding: 12px; text-align: center;
-  }
-  .stat .num { font-size: 22px; font-weight: 800; }
-  .stat .label { font-size: 11px; color: var(--inkSoft); margin-top: 2px; }
-  .section-title {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--pitch); margin: 20px 0 10px;
-  }
-  .milestone {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid var(--line);
-  }
-  .milestone:last-child { border-bottom: none; }
-  .m-title { font-size: 14px; text-transform: capitalize; }
-  .m-date { font-size: 12px; color: var(--inkFaint); }
-  .conf { font-size: 12px; font-weight: 700; color: var(--pitch); }
-  .footer-note {
-    text-align: center; font-size: 11.5px; color: var(--inkFaint); margin-top: 20px; line-height: 1.5;
-  }
+:root { --inkSoft: var(--muted); --inkFaint: var(--subtle); }
+.app-page input#pin { font-size: 28px; letter-spacing: 10px; text-align: center; font-family: var(--display); font-weight: 700; }
+.name { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 30px; text-transform: uppercase; line-height: 1; margin: 0 0 6px; }
+.sub { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+.stats { display: flex; gap: 10px; margin-bottom: 8px; }
+.stat { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; text-align: center; }
+.stat .num { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 40px; line-height: 1; color: var(--accent); }
+.stat .label { font-family: var(--display); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 4px; }
+.section-title { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pitch); margin: 22px 0 8px; }
+.section-title::before { content: ''; width: 4px; height: 13px; background: currentColor; transform: skewX(-20deg); }
+.milestone { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.m-title { font-weight: 600; text-transform: capitalize; }
+.m-date { color: var(--subtle); font-size: 13px; margin-top: 2px; }
+.conf { font-family: var(--display); font-weight: 700; font-style: italic; color: var(--pitch); font-size: 18px; }
+.footer-note { color: var(--subtle); font-size: 13px; margin: 18px 0 0; line-height: 1.5; }
 </style>
 </head>
-<body>
+<body class="app-page">
 <div class="wrap">
-  <div class="kicker">COMEBACK</div>
-  <h1>Injury recovery progress</h1>
+  <p class="kicker">Comeback</p>
+  <h1 class="disp">Injury recovery progress</h1>
 
-  <div class="card" id="pinCard">
+  <div class="card tabbed" id="pinCard">
     <label for="pin">Enter the 4-digit PIN</label>
     <input id="pin" type="tel" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" />
     <button id="submitBtn" onclick="submitPin()">View progress</button>
     <div class="err hidden" id="errMsg"></div>
   </div>
 
-  <div class="card hidden" id="dataCard">
+  <div class="card tabbed hidden" id="dataCard">
     <p class="name" id="dName"></p>
     <p class="sub" id="dSub"></p>
     <div class="stats">
